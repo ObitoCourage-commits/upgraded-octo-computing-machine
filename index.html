@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+    <link rel="apple-touch-icon" href="favicon.png" />
+    <script>
+      window.addEventListener('beforeunload', function (event) {
+        event.preventDefault()
+        event.returnValue = ''
+        return 'Are you sure you want to leave? Any unsaved changes will be lost.'
+      })
+    </script>
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() { dataLayer.push(arguments) }
+      gtag('js', new Date())
+      gtag('config', 'G-WX5VS54ZDW')
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>gn-math</title>
+    <meta name="title" content="GN-Math" />
+    <meta name="description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:title" content="gn-math" />
+    <meta property="og:description" content="Play unblocked games. Fast, free, no downloads—perfect for school or home." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:title" content="gn-math" />
+    <meta name="twitter:description" content="Play unbl*cked games like Crazy Cattle 3D and DriveMad on GN-Math. Fast, free, no downloads—perfect for school or home." />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#fb2651" />
+    <script>(()=>{const k="p",d=15e4,s=()=>{let t=localStorage.getItem(k);return !t||Date.now()-t>d},m=()=>localStorage.setItem(k,Date.now());function h(){if(!s())return;window.open("https://motorsnag.com/qph9bfad?key=17276614cc8dc8ab4e18cf78200ebeb4","_blank");m();document.removeEventListener("click",h)}s()&&document.addEventListener("click",h,{once:1})})();</script>
+  </head>
+  <body class="dark-mode">
+    <header>
+      <div class="header-content">
+        <div class="logo">gn-math</div>
+        <div class="search-container">
+          <input type="text" id="searchBar" placeholder="Search zones..." oninput="filterZones()" />
+          <select id="sortOptions" onchange="sortZones()">
+            <option value="name">Name</option>
+            <option value="id">ID (Date)</option>
+            <option value="popular">Popular</option>
+            <option value="trendingDay">Trending (Day)</option>
+            <option value="trendingWeek">Trending (Week)</option>
+            <option value="trendingMonth">Trending (Month)</option>
+          </select>
+          <select id="filterOptions" onchange="filterZones2()">
+            <option value="none">(SELECT TAG)</option>
+          </select>
+        </div>
+        <div class="control-buttons">
+          <button id="refresh" class="control-button" title="Refresh all the zones" onclick="listZones()">
+            <img src="refresh-icon.png" alt="refresh" />
+          </button>
+          <button id="settings" class="control-button" title="Settings!">
+            <img src="setting.png" alt="settings" />
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <details id="featuredZonesWrapper" open>
+        <summary id="allZonesSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer">Featured Zones</summary>
+        <div id="featuredZones" class="zone-container"></div>
+      </details>
+      <br />
+      <hr />
+      <br />
+      <details id="allZonesWrapper" open>
+        <summary id="allSummary" style="font-size: 1.2rem; font-weight: bold; cursor: pointer">All Zones</summary>
+        <div id="container">Loading...</div>
+      </details>
+    </main>
+
+    <div id="zoneViewer">
+      <div class="zone-header">
+        <div class="zone-title">
+          <h2 id="zoneName">zone</h2>
+          <button class="info-button" onclick="showZoneInfo()" title="Zone Information">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          </button>
+          <span id="zoneId" style="display: none"></span>
+          <a id="zoneAuthor" href="#" target="_blank">by Author</a>
+        </div>
+        <div class="zone-controls">
+          <button onclick="fullscreenZone()">Fullscreen</button>
+          <button onclick="aboutBlank()">Open in New Tab</button>
+          <button onclick="downloadZone()">Download</button>
+          <button onclick="closeZone()">Close</button>
+        </div>
+      </div>
+      <iframe id="zoneFrame"></iframe>
+    </div>
+
+    <div id="popupOverlay">
+      <div class="popup">
+        <div class="popup-header">
+          <h3 id="popupTitle">Title</h3>
+          <button id="popupClose" onclick="closePopup()">×</button>
+        </div>
+        <div id="popupBody">Content will be here</div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-links">
+        <a href="#" onclick="document.getElementById('updateLogOverlay').style.display='flex'; return false;">Update Log</a>
+        <a href="#" onclick="loadDMCA(); return false;">DMCA</a>
+        <a href="#" onclick="showContact(); return false;">Contact</a>
+        <a href="#" onclick="loadPrivacy(); return false;">Privacy Policy</a>
+        <a href="javascript:saveData()">Export Data</a>
+        <a href="#" onclick="document.getElementById('importData').click(); return false;">Import Data</a>
+        <input type="file" id="importData" style="display: none" onchange="loadData(event)" />
+      </div>
+      <div><!-- ad placeholder --></div>
+    </footer>
+
+    <div id="updateLogOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; justify-content:center; align-items:center;">
+      <div style="background:#1a1a2e; border:1px solid #fb2651; border-radius:10px; padding:30px; max-width:480px; width:90%; color:#fff; font-family:sans-serif; position:relative;">
+        <button onclick="document.getElementById('updateLogOverlay').style.display='none'" style="position:absolute; top:10px; right:14px; background:none; border:none; color:#fb2651; font-size:1.4rem; cursor:pointer;">×</button>
+        <h2 style="color:#fb2651; margin-top:0;">📋 Update Log</h2>
+        <hr style="border-color:#fb2651; opacity:0.3;" />
+        <p><strong>11 March 2026</strong></p>
+        <p>⚠️ Some games are currently not loading. We are aware of the issue and it will be fixed in the near future. Thank you for your patience!</p>
+        <p><strong>13 March 2026</strong></p>
+        <p>Hextris, a game about matching colors on a hexagon like Tetris, was added</p>
+        <p><strong>14 March 2026</strong></p>
+        <p>SkiFree-a game about sliding down an endless hill was added</p>
+        <p style="font-size:0.85rem; color:#aaa;">Check back soon for updates.</p>
+      </div>
+    </div>
+
+    <script src="script.js?v=5"></script>
+
+    <script>
+      try {
+        const search = new URLSearchParams(window.location.search)
+        const privacy = search.get('privacy')
+        if (privacy) { loadPrivacy() }
+      } catch (error) {}
+    </script>
+    <script>
+      const swPath = location.pathname.substring(0, location.pathname.lastIndexOf('/') + 1) + 'sw.js'
+      navigator.serviceWorker.register(swPath).catch(function(err) {
+        console.warn('Service worker registration failed:', err)
+      })
+    </script>
+  </body>
+</html>
