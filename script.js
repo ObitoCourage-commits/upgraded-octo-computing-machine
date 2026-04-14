@@ -184,7 +184,6 @@ async function fetchPopularity(duration) {
        const response = await fetch(
     "https://data.jsdelivr.com/v1/stats/packages/gh/ObitoCourage-commits/solid-dollop@main/files?period=" + duration
 );
-        );
         const data = await response.json();
         data.forEach(file => {
             const idMatch = file.name.match(/\/(\d+)\.html$/);
