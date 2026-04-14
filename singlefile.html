@@ -814,14 +814,11 @@ const sortOptions = document.getElementById('sortOptions');
 const filterOptions = document.getElementById('filterOptions');
 // https://www.jsdelivr.com/tools/purge
 const zonesurls = [
-    "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/assets@main/zones.json",
-    "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/assets@latest/zones.json",
-    "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/assets@master/zones.json",
-    "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/assets/zones.json"
+    "https://cdn.jsdelivr.net/gh/Obitocourage-commits/assets@main/zones.json",
 ];
 let zonesURL = zonesurls[Math.floor(Math.random() * zonesurls.length)];
-const coverURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/covers@main";
-const htmlURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/html@main";
+const coverURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/psychic-computing-machine@main";
+const htmlURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/solid-dollop@main";
 let zones = [];
 let popularityData = {};
 const featuredContainer = document.getElementById('featuredZones');
@@ -844,7 +841,7 @@ async function listZones() {
             shajson = await sharesponse.json();
             sha = shajson[0]['sha'];
             if (sha) {
-                zonesURL = `https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/assets@${sha}/zones.json`;
+                zonesURL = `https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@main/zones.json`;
             }
           } catch (error) {
             try {
@@ -852,7 +849,7 @@ async function listZones() {
                 if (secondarysharesponse && secondarysharesponse.status === 200) {
                     sha = (await secondarysharesponse.text()).trim();
                     if (sha) {
-                        zonesURL = `https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/assets@${sha}/zones.json`;
+                        zonesURL = `https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
                     }
                 }
             } catch(error) {}
