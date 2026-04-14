@@ -10,8 +10,8 @@ const zonesurls = [
     "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@main/zones.json",
 ];
 let zonesURL = zonesurls[Math.floor(Math.random() * zonesurls.length)];
-const coverURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/covers@main";
-const htmlURL = "https://cdn.jsdelivr.net/gh/%67%6e%2d%6d%61%74%68/html@main";
+const coverURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/psychic-computing-machine@main";
+const htmlURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/solid-dollop@main";
 const blockedGames = [225, 528,];
 const htmlOverrides = {
     114: "https://raw.githubusercontent.com/ObitoCourage-commits/curly-siffle/main/114.html?t=" + Date.now(),
@@ -181,8 +181,9 @@ async function fetchPopularity(duration) {
         if (!popularityData[duration]) {
             popularityData[duration] = {};
         }
-        const response = await fetch(
-            "https://data.jsdelivr.com/v1/stats/packages/gh/%67%6e%2d%6d%61%74%68/html@main/files?period=" + duration
+       const response = await fetch(
+    "https://data.jsdelivr.com/v1/stats/packages/gh/ObitoCourage-commits/solid-dollop@main/files?period=" + duration
+);
         );
         const data = await response.json();
         data.forEach(file => {
