@@ -14,7 +14,6 @@ const coverURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/psychic-compu
 const htmlURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/solid-dollop@main";
 const blockedGames = [225, 528,];
 function getGameURL(zone) {
-    if (htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)]) return htmlOverrides[zone.id] || htmlOverrides[Number(zone.id)];
     return zone.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
 }
 let zones = [];
