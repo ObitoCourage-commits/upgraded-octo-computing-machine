@@ -155,5 +155,25 @@
         console.warn('Service worker registration failed:', err)
       })
     </script>
+    <!-- Discontinuation Notice Modal -->
+<div id="discontinueOverlay" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center;">
+  <div style="background:#1a1a2e; border:2px solid #fb2651; border-radius:12px; padding:32px 28px; max-width:460px; width:90%; color:#fff; font-family:sans-serif; position:relative; box-shadow:0 0 40px rgba(251,38,81,0.3);">
+    <div style="font-size:2rem; margin-bottom:12px;">⚠️</div>
+    <h2 style="color:#fb2651; margin:0 0 16px; font-size:1.4rem;">Site Discontinuation Notice</h2>
+    <hr style="border:none; border-top:1px solid rgba(251,38,81,0.3); margin-bottom:16px;" />
+    <p style="line-height:1.6; color:#e0e0e0; margin:0 0 20px;">
+      This site is being <strong style="color:#fb2651;">discontinued on May 27th, 2026</strong>. This is the final update — there will be no more games, no more nothing.
+    </p>
+    <p style="line-height:1.6; color:#e0e0e0; margin:0 0 24px;">
+      I may make a new repo in the future, but this is it for now. Bye. 👋
+    </p>
+    <button onclick="document.getElementById('discontinueOverlay').style.display='none'; localStorage.setItem('discNotice','1');" style="background:#fb2651; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1rem; cursor:pointer; width:100%;">I understand</button>
+  </div>
+</div>
+<script>
+  if (localStorage.getItem('discNotice')) {
+    document.getElementById('discontinueOverlay').style.display = 'none';
+  }
+</script>
   </body>
 </html>
