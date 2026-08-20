@@ -11,13 +11,6 @@
         return 'Are you sure you want to leave? Any unsaved changes will be lost.'
       })
     </script>
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-WX5VS54ZDW"></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() { dataLayer.push(arguments) }
-      gtag('js', new Date())
-      gtag('config', 'G-WX5VS54ZDW')
-    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>gn-math</title>
@@ -34,7 +27,6 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#fb2651" />
-    <script>(()=>{const k="p",d=15e4,s=()=>{let t=localStorage.getItem(k);return !t||Date.now()-t>d},m=()=>localStorage.setItem(k,Date.now());function h(){if(!s())return;window.open("https://motorsnag.com/qph9bfad?key=17276614cc8dc8ab4e18cf78200ebeb4","_blank");m();document.removeEventListener("click",h)}s()&&document.addEventListener("click",h,{once:1})})();</script>
   </head>
   <body class="dark-mode">
     <header>
@@ -136,6 +128,10 @@
         <p>Hextris, a game about matching colors on a hexagon like Tetris, was added</p>
         <p><strong>14 March 2026</strong></p>
         <p>SkiFree-a game about sliding down an endless hill was added</p>
+        <p><strong>27 May 2026</strong></p>
+        <p>⚠️ Temporary shutdown induced. The site has been taken offline while we work on improvements.</p>
+        <p><strong>19 August 2026</strong></p>
+        <p>✅ Temporary shutdown ended — the site is back up! Thank you for your patience.</p>
         <p style="font-size:0.85rem; color:#aaa;">Check back soon for updates.</p>
       </div>
     </div>
@@ -155,25 +151,26 @@
         console.warn('Service worker registration failed:', err)
       })
     </script>
-    <!-- Discontinuation Notice Modal -->
-<div id="discontinueOverlay" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center;">
-  <div style="background:#1a1a2e; border:2px solid #fb2651; border-radius:12px; padding:32px 28px; max-width:460px; width:90%; color:#fff; font-family:sans-serif; position:relative; box-shadow:0 0 40px rgba(251,38,81,0.3);">
-    <div style="font-size:2rem; margin-bottom:12px;">⚠️</div>
-    <h2 style="color:#fb2651; margin:0 0 16px; font-size:1.4rem;">Site Discontinuation Notice</h2>
-    <hr style="border:none; border-top:1px solid rgba(251,38,81,0.3); margin-bottom:16px;" />
-    <p style="line-height:1.6; color:#e0e0e0; margin:0 0 20px;">
-      This site is being <strong style="color:#fb2651;">discontinued on May 27th, 2026</strong>. This is the final update — there will be no more games, no more nothing.
-    </p>
-    <p style="line-height:1.6; color:#e0e0e0; margin:0 0 24px;">
-      I may make a new repo in the future, but this is it for now. Bye. 👋
-    </p>
-    <button onclick="document.getElementById('discontinueOverlay').style.display='none'; localStorage.setItem('discNotice','1');" style="background:#fb2651; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1rem; cursor:pointer; width:100%;">I understand</button>
-  </div>
-</div>
-<script>
-  if (localStorage.getItem('discNotice')) {
-    document.getElementById('discontinueOverlay').style.display = 'none';
-  }
-</script>
+
+    <!-- New Beginning Notice Modal -->
+    <div id="discontinueOverlay" style="display:flex; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center;">
+      <div style="background:#1a1a2e; border:2px solid #fb2651; border-radius:12px; padding:32px 28px; max-width:460px; width:90%; color:#fff; font-family:sans-serif; position:relative; box-shadow:0 0 40px rgba(251,38,81,0.3);">
+        <div style="font-size:2rem; margin-bottom:12px;">🚀</div>
+        <h2 style="color:#fb2651; margin:0 0 16px; font-size:1.4rem;">A New Beginning</h2>
+        <hr style="border:none; border-top:1px solid rgba(251,38,81,0.3); margin-bottom:16px;" />
+        <p style="line-height:1.6; color:#e0e0e0; margin:0 0 20px;">
+          GN-Math is currently <strong style="color:#fb2651;">undergoing a major rebuild</strong>. We're working hard behind the scenes to bring you something better than ever.
+        </p>
+        <p style="line-height:1.6; color:#e0e0e0; margin:0 0 24px;">
+          We hope to have the site back up and running by <strong style="color:#fb2651;">late September 2026</strong>. Thank you for your patience and support — the best is yet to come. 🙌
+        </p>
+        <button onclick="document.getElementById('discontinueOverlay').style.display='none'; localStorage.setItem('discNotice','1');" style="background:#fb2651; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1rem; cursor:pointer; width:100%;">Got it, see you soon!</button>
+      </div>
+    </div>
+    <script>
+      if (localStorage.getItem('discNotice')) {
+        document.getElementById('discontinueOverlay').style.display = 'none';
+      }
+    </script>
   </body>
 </html>
