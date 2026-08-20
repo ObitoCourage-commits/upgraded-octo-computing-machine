@@ -7,11 +7,11 @@ const sortOptions = document.getElementById('sortOptions');
 const filterOptions = document.getElementById('filterOptions');
 // https://www.jsdelivr.com/tools/purge
 const zonesurls = [
-    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@main/zones.json",
+    "https://cdn.statically.io/gh/ObitoCourage-commits/assets@main/zones.json",
 ];
 let zonesURL = zonesurls[Math.floor(Math.random() * zonesurls.length)];
-const coverURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/psychic-computing-machine@main";
-const htmlURL = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/solid-dollop@main";
+const coverURL = "https://cdn.statically.io/gh/ObitoCourage-commits/psychic-computing-machine@main";
+const htmlURL = "https://cdn.statically.io/gh/ObitoCourage-commits/solid-dollop@main";
 const blockedGames = [225, 528,];
 function getGameURL(zone) {
     return zone.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
@@ -35,7 +35,7 @@ async function listZones() {
             shajson = await sharesponse.json();
             sha = shajson[0]['sha'];
             if (sha) {
-                zonesURL = `https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
+                zonesURL = `https://cdn.statically.io/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
             }
           } catch (error) {
             try {
@@ -43,7 +43,7 @@ async function listZones() {
                 if (secondarysharesponse && secondarysharesponse.status === 200) {
                     sha = (await secondarysharesponse.text()).trim();
                     if (sha) {
-                        zonesURL = `https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
+                        zonesURL = `https://cdn.statically.io/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
                     }
                 }
             } catch(error) {}
@@ -55,6 +55,7 @@ async function listZones() {
         zones[0].featured = true;
         await Promise.all([fetchPopularity("year"), fetchPopularity("month"), fetchPopularity("week"), fetchPopularity("day")]);
         sortZones();
+
         try {
         const search = new URLSearchParams(window.location.search);
         const id = search.get('id');
