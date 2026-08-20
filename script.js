@@ -8,10 +8,19 @@ const filterOptions = document.getElementById('filterOptions');
 // https://www.jsdelivr.com/tools/purge
 const zonesurls = [
     "https://cdn.statically.io/gh/ObitoCourage-commits/assets@main/zones.json",
+    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@main/zones.json",
 ];
-let zonesURL = zonesurls[Math.floor(Math.random() * zonesurls.length)];
-const coverURL = "https://cdn.statically.io/gh/ObitoCourage-commits/psychic-computing-machine@main";
-const htmlURL = "https://cdn.statically.io/gh/ObitoCourage-commits/solid-dollop@main";
+let zonesURL = zonesurls[0];
+const coverURLs = [
+    "https://cdn.statically.io/gh/ObitoCourage-commits/psychic-computing-machine@main",
+    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/psychic-computing-machine@main",
+];
+const htmlURLs = [
+    "https://cdn.statically.io/gh/ObitoCourage-commits/solid-dollop@main",
+    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/solid-dollop@main",
+];
+let coverURL = coverURLs[0];
+let htmlURL = htmlURLs[0];
 const blockedGames = [225, 528,];
 function getGameURL(zone) {
     return zone.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
@@ -44,13 +53,26 @@ async function listZones() {
                     sha = (await secondarysharesponse.text()).trim();
                     if (sha) {
                         zonesURL = `https://cdn.statically.io/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
+                        // keep jsdelivr as fallback by not overwriting zonesurls[1]
                     }
                 }
             } catch(error) {}
           }
         }
-        const response = await fetch(zonesURL+"?t="+Date.now());
-        const json = await response.json();
+        let response = await fetch(zonesURL+"?t="+Date.now());
+        if (!response.ok) throw new Error("Primary CDN failed");
+        let json;
+        try {
+            json = await response.json();
+            if (!Array.isArray(json)) throw new Error("Bad response");
+        } catch(e) {
+            // fallback to jsdelivr
+            zonesURL = zonesurls[1];
+            coverURL = coverURLs[1];
+            htmlURL = htmlURLs[1];
+            response = await fetch(zonesURL+"?t="+Date.now());
+            json = await response.json();
+        }
         zones = json.filter(z => !blockedGames.includes(z.id));
         zones[0].featured = true;
         await Promise.all([fetchPopularity("year"), fetchPopularity("month"), fetchPopularity("week"), fetchPopularity("day")]);
