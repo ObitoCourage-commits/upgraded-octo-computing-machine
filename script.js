@@ -6,21 +6,42 @@ const searchBar = document.getElementById('searchBar');
 const sortOptions = document.getElementById('sortOptions');
 const filterOptions = document.getElementById('filterOptions');
 // https://www.jsdelivr.com/tools/purge
-const zonesurls = [
-    "https://cdn.statically.io/gh/ObitoCourage-commits/assets@main/zones.json",
-    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/assets@main/zones.json",
-];
-let zonesURL = zonesurls[0];
-const coverURLs = [
-    "https://cdn.statically.io/gh/ObitoCourage-commits/psychic-computing-machine@main",
-    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/psychic-computing-machine@main",
-];
-const htmlURLs = [
-    "https://cdn.statically.io/gh/ObitoCourage-commits/solid-dollop@main",
-    "https://cdn.jsdelivr.net/gh/ObitoCourage-commits/solid-dollop@main",
-];
-let coverURL = coverURLs[0];
-let htmlURL = htmlURLs[0];
+const CDN_STATICALLY = "https://cdn.statically.io/gh/ObitoCourage-commits";
+const CDN_JSDELIVR = "https://cdn.jsdelivr.net/gh/ObitoCourage-commits";
+let activeCDN = CDN_JSDELIVR; // will be set by race
+
+async function raceCDN() {
+    const urls = [
+        CDN_STATICALLY + "/assets@main/zones.json",
+        CDN_JSDELIVR + "/assets@main/zones.json",
+    ];
+    return new Promise((resolve) => {
+        let settled = false;
+        urls.forEach((url, i) => {
+            fetch(url + "?t=" + Date.now())
+                .then(res => {
+                    if (!settled && res.ok) {
+                        settled = true;
+                        activeCDN = i === 0 ? CDN_STATICALLY : CDN_JSDELIVR;
+                        resolve(res);
+                    }
+                })
+                .catch(() => {});
+        });
+        // hard fallback after 8 seconds
+        setTimeout(() => {
+            if (!settled) {
+                settled = true;
+                activeCDN = CDN_JSDELIVR;
+                resolve(fetch(CDN_JSDELIVR + "/assets@main/zones.json?t=" + Date.now()));
+            }
+        }, 8000);
+    });
+}
+
+let zonesURL = CDN_JSDELIVR + "/assets@main/zones.json";
+let coverURL = CDN_JSDELIVR + "/psychic-computing-machine@main";
+let htmlURL = CDN_JSDELIVR + "/solid-dollop@main";
 const blockedGames = [225, 528,];
 function getGameURL(zone) {
     return zone.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
@@ -33,46 +54,31 @@ function toTitleCase(str) {
 }
 async function listZones() {
     try {
-      let sharesponse;
-      let shajson;
-      let sha;
-        try {
-          sharesponse = await fetch("https://api.github.com/repos/ObitoCourage-commits/assets/commits?t="+Date.now());
-        } catch (error) {}
-        if (sharesponse && sharesponse.status === 200) {
-          try {
-            shajson = await sharesponse.json();
-            sha = shajson[0]['sha'];
-            if (sha) {
-                zonesURL = `https://cdn.statically.io/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
-            }
-          } catch (error) {
+        // Load zones immediately, SHA check runs in background
+        const response = await raceCDN();
+        coverURL = activeCDN + "/psychic-computing-machine@main";
+        htmlURL = activeCDN + "/solid-dollop@main";
+        const json = await response.json();
+
+        // SHA check in background - does not block zone loading
+        (async () => {
             try {
-                let secondarysharesponse = await fetch("https://raw.githubusercontent.com/%67%6e%2d%6d%61%74%68/xml/refs/heads/main/sha.txt?t="+Date.now());
-                if (secondarysharesponse && secondarysharesponse.status === 200) {
-                    sha = (await secondarysharesponse.text()).trim();
-                    if (sha) {
-                        zonesURL = `https://cdn.statically.io/gh/ObitoCourage-commits/assets@${sha}/zones.json`;
-                        // keep jsdelivr as fallback by not overwriting zonesurls[1]
-                    }
+                const sharesponse = await fetch("https://api.github.com/repos/ObitoCourage-commits/assets/commits?t="+Date.now());
+                if (sharesponse && sharesponse.status === 200) {
+                    const shajson = await sharesponse.json();
+                    const sha = shajson[0]['sha'];
+                    if (sha) zonesURL = `${activeCDN}/assets@${sha}/zones.json`;
                 }
-            } catch(error) {}
-          }
-        }
-        let response = await fetch(zonesURL+"?t="+Date.now());
-        if (!response.ok) throw new Error("Primary CDN failed");
-        let json;
-        try {
-            json = await response.json();
-            if (!Array.isArray(json)) throw new Error("Bad response");
-        } catch(e) {
-            // fallback to jsdelivr
-            zonesURL = zonesurls[1];
-            coverURL = coverURLs[1];
-            htmlURL = htmlURLs[1];
-            response = await fetch(zonesURL+"?t="+Date.now());
-            json = await response.json();
-        }
+            } catch(e) {
+                try {
+                    const r2 = await fetch("https://raw.githubusercontent.com/%67%6e%2d%6d%61%74%68/xml/refs/heads/main/sha.txt?t="+Date.now());
+                    if (r2 && r2.status === 200) {
+                        const sha = (await r2.text()).trim();
+                        if (sha) zonesURL = `${activeCDN}/assets@${sha}/zones.json`;
+                    }
+                } catch(e) {}
+            }
+        })();
         zones = json.filter(z => !blockedGames.includes(z.id));
         zones[0].featured = true;
         await Promise.all([fetchPopularity("year"), fetchPopularity("month"), fetchPopularity("week"), fetchPopularity("day")]);
